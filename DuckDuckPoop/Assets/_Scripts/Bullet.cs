@@ -17,7 +17,7 @@ public class Bullet : MonoBehaviour {
         // Getting the planets position
         planet = GameObject.FindGameObjectWithTag("Planet").transform.position;
         // Store the forward vector when spawned
-        forward = transform.forward;
+        SetForwardVec(transform.right);
 	}
 
     private void FixedUpdate()
@@ -41,5 +41,17 @@ public class Bullet : MonoBehaviour {
         if (collision.gameObject.transform.tag == "Hunter")
             // Call DuckWin function in the Manager Script
             GameObject.FindGameObjectWithTag("Manager").GetComponent<Manager>().DuckWin();
+
+        if (collision.gameObject.transform.tag == "Poop")
+            // Call DuckWin function in the Manager Script
+            Debug.Log("Poop Collided");
+            SetForwardVec(transform.forward += new Vector3(Random.Range(-5,5), Random.Range(-0.9f, 0), Random.Range(-5, 5)));
+        
+    }
+
+    void SetForwardVec(Vector3 v)
+    {
+        forward = v;
+        transform.LookAt(transform.position,forward);
     }
 }

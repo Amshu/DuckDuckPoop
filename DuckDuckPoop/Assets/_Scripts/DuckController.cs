@@ -1,72 +1,99 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class DuckController : MonoBehaviour {
 
     [SerializeField] float moveSpeed = 15;
-    [SerializeField] float dashForce = 5;
+    [SerializeField] float dashForce = 30;
     private Vector3 moveDir;
     Rigidbody rb;
 
     bool duck = false;
-
     [SerializeField] GameObject poop;
+    [SerializeField] GameObject ind;
+    bool canPoop = true;
+
+
+    [SerializeField] Animator anim;
+    new AudioSource audio;
 
     // Reference to the Manager Script
     Manager manager;
 
-    private void Start()
+    void Start()
     {
         rb = gameObject.GetComponent<Rigidbody>();
+        audio = gameObject.GetComponent<AudioSource>();
         manager = GameObject.FindGameObjectWithTag("Manager").GetComponent<Manager>();
+        ind.GetComponent<Material>().color = Color.green;
+
     }
 
-    private void Update()
+    void Update()
+    {
+        // Get controls and apply
+        float x = Input.GetAxis("Horizontal1");
+        float z = Input.GetAxis("Vertical1");
+        moveDir = new Vector3(x, 0, z).normalized;
+
+        //Animate
+        anim.SetFloat("Move", Mathf.Abs(x) + Mathf.Abs(z));
+
+        // If duck is pressed
+        if (Input.GetButtonDown("DDuck") )//&& canPoop)
+        {
+            // Making it into a ducking state
+            duck = true;
+
+            // Store the current position
+            Vector3 tempLoc = transform.position;
+
+            // Change the scale of the mesh
+            transform.Find("Body").transform.localScale = new Vector3(1, 0.5f, 1);
+            // Change the height of the collider
+            GetComponent<CapsuleCollider>().height = 1;
+            // Do a dash
+            //rb.AddForce(transform.forward * dashForce, ForceMode.Impulse);
+            rb.MovePosition(rb.position + transform.TransformDirection(moveDir) * dashForce * Time.deltaTime);
+
+            // Poop
+            GameObject.Instantiate(poop, tempLoc, transform.rotation);
+
+            // Start cooldown
+            canPoop = false;
+            ind.GetComponent<Material>().color = Color.red;
+            //StartCoroutine("Reload");
+        }
+
+        if (Input.GetButtonUp("DDuck"))
+        {
+            // If ducking is done, revert to normal
+            if (duck)
+            {
+                audio.Play();
+                // Change the scale of the mesh
+                transform.Find("Body").transform.localScale = new Vector3(1, 1, 1);
+                // Change the height of the collider
+                GetComponent<CapsuleCollider>().height = 2;
+            }
+            duck = false;
+        }
+    }
+
+    void FixedUpdate()
     {
         // If game is not over
         if (!manager.gameOver)
         {
-            // Get controls from Controller 1
-            moveDir = new Vector3(Input.GetAxis("Horizontal1"), 0, Input.GetAxis("Vertical1")).normalized;
-
-            // If duck is pressed
-            if (Input.GetButtonDown("DDuck"))
-            {
-                // Making it into a ducking state
-                duck = true;
-
-                // Store the current position
-                Vector3 tempLoc = transform.position;
-
-                // Change the scale of the mesh
-                transform.Find("Body").transform.localScale = new Vector3(1, 0.5f, 1);
-                // Change the height of the collider
-                GetComponent<CapsuleCollider>().height = 1;
-                // Do a dash
-                //rb.AddForce(transform.forward * dashForce, ForceMode.Impulse);
-
-                // Poop
-                GameObject.Instantiate(poop, tempLoc, transform.rotation);
-
-                //Debug.Log("Dodge");
-
-            }
-            if (Input.GetButtonUp("DDuck"))
-            {
-                // If ducking is done, revert to normal
-                if (duck)
-                {
-                    // Change the scale of the mesh
-                    transform.Find("Body").transform.localScale = new Vector3(1, 1, 1);
-                    // Change the height of the collider
-                    GetComponent<CapsuleCollider>().height = 2;
-                }
-                duck = false;
-            }
+            rb.MovePosition(rb.position + transform.TransformDirection(moveDir) * moveSpeed * Time.deltaTime);
         }
     }
-
-    private void FixedUpdate()
+    
+    IEnumerator Reload()
     {
-        rb.MovePosition(rb.position + transform.TransformDirection(moveDir) * moveSpeed * Time.deltaTime);
+        
+        yield return new WaitForSeconds(2.0f);
+        canPoop = true;
+        ind.GetComponent<Material>().color = Color.green;
     }
 }

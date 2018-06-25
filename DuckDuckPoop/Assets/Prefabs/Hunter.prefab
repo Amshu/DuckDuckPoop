@@ -88,8 +88,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1952224596917638}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 6.29, y: 14.01, z: 0.85}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4101533331202348}
@@ -104,13 +104,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1895017330921146}
-  m_LocalRotation: {x: 0.22673629, y: 0, z: 0, w: 0.97395617}
-  m_LocalPosition: {x: -0.27, y: 3.3899994, z: -5.97}
+  m_LocalRotation: {x: 0.5735764, y: 0, z: 0, w: 0.8191521}
+  m_LocalPosition: {x: 0, y: 14.5, z: -6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4056475250307676}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 26.210001, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 70, y: 0, z: 0}
 --- !u!4 &4214695933277230
 Transform:
   m_ObjectHideFlags: 1
@@ -130,13 +130,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1334774254518876}
-  m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0.55, y: 0.139, z: 1.196}
-  m_LocalScale: {x: 0.5134369, y: 0.1668654, z: 0.3635388}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.55, y: 0.16, z: 1.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4056475250307676}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!20 &20560234003170444
 Camera:
   m_ObjectHideFlags: 1
@@ -145,7 +145,7 @@ Camera:
   m_GameObject: {fileID: 1895017330921146}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 2
+  m_ClearFlags: 1
   m_BackGroundColor: {r: 1, g: 0.9372549, b: 0.8117647, a: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
@@ -315,7 +315,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 15
-  bullet: {fileID: 1008292977366062, guid: 8869f99fe39a3d344ba8a345e4212c5b, type: 2}
+  bullet: {fileID: 1065573654951034, guid: 1332ea32edca7704d8d341ef1da0c1b8, type: 2}
   spawnLoc: {fileID: 1334774254518876}
 --- !u!136 &136250322055312262
 CapsuleCollider:
