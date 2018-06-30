@@ -3,18 +3,22 @@ using UnityEngine;
 
 public class DuckController : MonoBehaviour {
 
+    // Movement Variables
     [SerializeField] float moveSpeed = 15;
-    [SerializeField] float dashForce = 30;
+    [SerializeField] float dashForce = 50;
     private Vector3 moveDir;
     Rigidbody rb;
 
-    bool duck = false;
-    [SerializeField] GameObject poop;
-    [SerializeField] GameObject ind;
+    // Ability Variables
+    [SerializeField] GameObject poop;   // Poop Prefab'
+    [SerializeField] float coolDownSec = 2.0f;
+    [SerializeField] float duckCoolDownSec = 0.5f;
+    
     bool canPoop = true;
 
-
-    [SerializeField] Animator anim;
+    // Visual Feedback Variables
+    GameObject ind;              // Cooldown Indicator
+    Animator anim;
     new AudioSource audio;
 
     // Reference to the Manager Script
@@ -22,62 +26,74 @@ public class DuckController : MonoBehaviour {
 
     void Start()
     {
+        // Get all the references to the variables
         rb = gameObject.GetComponent<Rigidbody>();
-        audio = gameObject.GetComponent<AudioSource>();
-        manager = GameObject.FindGameObjectWithTag("Manager").GetComponent<Manager>();
-        ind.GetComponent<Material>().color = Color.green;
 
+        ind = transform.GetChild(2).gameObject; // Reference to the indicator
+        ind.GetComponent<MeshRenderer>().material.color = Color.green;
+        anim = transform.GetChild(1).GetComponent<Animator>();
+        audio = gameObject.GetComponent<AudioSource>();
+        audio.volume = 0.4f;
+
+        manager = GameObject.FindGameObjectWithTag("Manager").GetComponent<Manager>();
     }
 
-    void Update()
+    public void MoveDuck(float x, float z, bool p)
     {
-        // Get controls and apply
-        float x = Input.GetAxis("Horizontal1");
-        float z = Input.GetAxis("Vertical1");
         moveDir = new Vector3(x, 0, z).normalized;
 
         //Animate
         anim.SetFloat("Move", Mathf.Abs(x) + Mathf.Abs(z));
 
-        // If duck is pressed
-        if (Input.GetButtonDown("DDuck") )//&& canPoop)
-        {
-            // Making it into a ducking state
-            duck = true;
+        // When the poop button is pressed
+        if (p && canPoop)
+            DuckPoop();
+    }
 
-            // Store the current position
-            Vector3 tempLoc = transform.position;
+    void DuckPoop()
+    {
+        // Store the current position
+        Vector3 tempLoc = transform.position;
 
-            // Change the scale of the mesh
-            transform.Find("Body").transform.localScale = new Vector3(1, 0.5f, 1);
-            // Change the height of the collider
-            GetComponent<CapsuleCollider>().height = 1;
-            // Do a dash
-            //rb.AddForce(transform.forward * dashForce, ForceMode.Impulse);
-            rb.MovePosition(rb.position + transform.TransformDirection(moveDir) * dashForce * Time.deltaTime);
+        // Do a dash
+        //rb.AddForce(transform.forward * dashForce * Time.deltaTime, ForceMode.Impulse);
+        rb.MovePosition(rb.position + transform.TransformDirection(moveDir) * dashForce * Time.deltaTime);
 
-            // Poop
-            GameObject.Instantiate(poop, tempLoc, transform.rotation);
+        // Poop
+        GameObject.Instantiate(poop, tempLoc, transform.rotation);
 
-            // Start cooldown
-            canPoop = false;
-            ind.GetComponent<Material>().color = Color.red;
-            //StartCoroutine("Reload");
-        }
+        StartCoroutine("Reload");
+    }
 
-        if (Input.GetButtonUp("DDuck"))
-        {
-            // If ducking is done, revert to normal
-            if (duck)
-            {
-                audio.Play();
-                // Change the scale of the mesh
-                transform.Find("Body").transform.localScale = new Vector3(1, 1, 1);
-                // Change the height of the collider
-                GetComponent<CapsuleCollider>().height = 2;
-            }
-            duck = false;
-        }
+    // Cooldown function for ability
+    IEnumerator Reload()
+    {
+        audio.Play();
+        StartCoroutine("OnDuck"); // Start timer for ducking
+        canPoop = false; // Disable ability
+        ind.GetComponent<MeshRenderer>().material.color = Color.red;
+       
+        yield return new WaitForSeconds(coolDownSec);
+
+        canPoop = true; // Enable ability
+        ind.GetComponent<MeshRenderer>().material.color = Color.green;
+    }
+
+    // Cooldown for ducking
+    IEnumerator OnDuck()
+    {
+        // Change the scale of the mesh
+        transform.Find("Body").transform.localScale = new Vector3(1, 0.5f, 1);
+        // Change the height of the collider
+        GetComponent<CapsuleCollider>().height = 1;
+
+        // If ducking is done, revert to normal
+        yield return new WaitForSeconds(duckCoolDownSec);
+
+        // Change the scale of the mesh
+        transform.Find("Body").transform.localScale = new Vector3(1, 1, 1);
+        // Change the height of the collider
+        GetComponent<CapsuleCollider>().height = 2;
     }
 
     void FixedUpdate()
@@ -87,13 +103,5 @@ public class DuckController : MonoBehaviour {
         {
             rb.MovePosition(rb.position + transform.TransformDirection(moveDir) * moveSpeed * Time.deltaTime);
         }
-    }
-    
-    IEnumerator Reload()
-    {
-        
-        yield return new WaitForSeconds(2.0f);
-        canPoop = true;
-        ind.GetComponent<Material>().color = Color.green;
     }
 }

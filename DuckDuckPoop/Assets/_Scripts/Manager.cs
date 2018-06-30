@@ -20,7 +20,7 @@ public class Manager : MonoBehaviour {
     private void Start()
     {
         audio = gameObject.GetComponent<AudioSource>();
-        audio.Play();
+        //audio.Play();
         audio.volume = 0.4f;
     }
 
