@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class InputManager : MonoBehaviour {
 
+    public static InputManager instance = null;              //Static instance of GameManager which allows it to be accessed by any other script.
+
     // Check for controllers
     int controllers;
 
@@ -12,19 +14,56 @@ public class InputManager : MonoBehaviour {
     float dx;
     float dz;
 
+
     // Hunter Controls
     HunterController hunter;
     float hx;
     float hz;
-    
 
-	// Use this for initialization
-	void Start () {
+
+    //Awake is always called before any Start functions
+    void Awake()
+    {
+        //Check if instance already exists
+        if (instance == null)
+
+            //if not, set instance to this
+            instance = this;
+
+        //If instance already exists and it's not this:
+        else if (instance != this)
+
+            //Then destroy this. This enforces our singleton pattern, meaning there can only ever be one instance of a GameManager.
+            Destroy(gameObject);
+
+        //Sets this to not be destroyed when reloading scene
+        DontDestroyOnLoad(gameObject);
+
+        //Call the InitGame function to initialize the first level 
+        InitGame();
+    }
+
+    //Initializes the game for each level.
+    void InitGame()
+    {
+        
+    }
+
+    // Use this for initialization
+    void Start () {
         // Get the duck controller script reference
         if (duck == null) duck = GameObject.FindGameObjectWithTag("Duck").GetComponent<DuckController>();
         // Get the duck controller script reference
         if (hunter == null) hunter = GameObject.FindGameObjectWithTag("Hunter").GetComponent<HunterController>();
 	}
+
+    private void OnLevelWasLoaded(int level)
+    {
+        // Get the duck controller script reference
+        if (duck == null) duck = GameObject.FindGameObjectWithTag("Duck").GetComponent<DuckController>();
+        // Get the duck controller script reference
+        if (hunter == null) hunter = GameObject.FindGameObjectWithTag("Hunter").GetComponent<HunterController>();
+    }
 
     // Update is called once per frame
     void Update()
@@ -76,7 +115,6 @@ public class InputManager : MonoBehaviour {
         dx = Input.GetAxis("Horizontal");
         dz = Input.GetAxis("Vertical");
         duck.MoveDuck(dx, dz, Input.GetButtonDown("DDuck2"));
-
 
         hx = Input.GetAxis("Horizontalb");
         hz = Input.GetAxis("Verticalb");

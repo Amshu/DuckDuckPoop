@@ -20,8 +20,6 @@ public class HunterController : MonoBehaviour {
     Animator anim;
     new AudioSource audio;
 
-    Manager manager;
-
     private void Start()
     {
         // Get all the references to the variables
@@ -33,9 +31,11 @@ public class HunterController : MonoBehaviour {
         anim = transform.GetChild(1).GetComponent<Animator>();
         audio = gameObject.GetComponent<AudioSource>();
         audio.volume = 0.4f;
+    }
 
-        // Reference to the Manager Script
-        manager = GameObject.FindGameObjectWithTag("Manager").GetComponent<Manager>();
+    private void Update()
+    {
+        
     }
 
     public void MoveHunter(float x, float z, bool s)
@@ -49,6 +49,15 @@ public class HunterController : MonoBehaviour {
         // If Fire button is pressed
         if (s && canShoot)
             HunterShoot();
+    }
+
+    private void FixedUpdate()
+    {
+        // If game is not over
+        if (!Manager.instance.gameOver)
+        {
+            rb.MovePosition(rb.position + transform.TransformDirection(moveDir) * moveSpeed * Time.deltaTime);
+        }
     }
 
     // Shoot function
@@ -71,12 +80,5 @@ public class HunterController : MonoBehaviour {
         ind.GetComponent<MeshRenderer>().material.color = Color.green;
     }
 
-    private void FixedUpdate()
-    {
-        // If game is not over
-        if (!manager.gameOver)
-        {
-            rb.MovePosition(rb.position + transform.TransformDirection(moveDir) * moveSpeed * Time.deltaTime);
-        }
-    }
+    
 }

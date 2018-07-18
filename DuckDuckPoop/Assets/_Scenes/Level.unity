@@ -461,6 +461,18 @@ Prefab:
       propertyPath: m_Name
       value: Hunter
       objectReference: {fileID: 0}
+    - target: {fileID: 4861289494418442, guid: d6be48e73171e124893337c6eee72027, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4861289494418442, guid: d6be48e73171e124893337c6eee72027, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4861289494418442, guid: d6be48e73171e124893337c6eee72027, type: 2}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 180
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d6be48e73171e124893337c6eee72027, type: 2}
   m_IsPrefabParent: 0

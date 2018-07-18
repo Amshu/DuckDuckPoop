@@ -21,9 +21,6 @@ public class DuckController : MonoBehaviour {
     Animator anim;
     new AudioSource audio;
 
-    // Reference to the Manager Script
-    Manager manager;
-
     void Start()
     {
         // Get all the references to the variables
@@ -34,8 +31,6 @@ public class DuckController : MonoBehaviour {
         anim = transform.GetChild(1).GetComponent<Animator>();
         audio = gameObject.GetComponent<AudioSource>();
         audio.volume = 0.4f;
-
-        manager = GameObject.FindGameObjectWithTag("Manager").GetComponent<Manager>();
     }
 
     public void MoveDuck(float x, float z, bool p)
@@ -99,7 +94,7 @@ public class DuckController : MonoBehaviour {
     void FixedUpdate()
     {
         // If game is not over
-        if (!manager.gameOver)
+        if (!Manager.instance.gameOver)
         {
             rb.MovePosition(rb.position + transform.TransformDirection(moveDir) * moveSpeed * Time.deltaTime);
         }
