@@ -37,16 +37,7 @@ public class InputManager : MonoBehaviour {
             Destroy(gameObject);
 
         //Sets this to not be destroyed when reloading scene
-        DontDestroyOnLoad(gameObject);
-
-        //Call the InitGame function to initialize the first level 
-        InitGame();
-    }
-
-    //Initializes the game for each level.
-    void InitGame()
-    {
-        
+        //DontDestroyOnLoad(gameObject);
     }
 
     // Use this for initialization

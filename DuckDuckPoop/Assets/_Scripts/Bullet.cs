@@ -4,11 +4,16 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour {
 
+    bool duckHit;
+    bool huntHit;
+
     [SerializeField] float bullSpeed = 100.0f;
     Vector3 planet;
     Vector3 forward;
 
     void Start () {
+        duckHit = false;
+        huntHit = false;
         // Getting the planets position
         planet = GameObject.FindGameObjectWithTag("Planet").transform.position;
         // Store the forward vector when spawned
@@ -22,7 +27,6 @@ public class Bullet : MonoBehaviour {
         if (!Manager.instance.gameOver)
         {
             // Rotate around the center of the planet every second
-            //transform.LookAt(transform.position, transform.right);
             transform.RotateAround(planet, forward, bullSpeed * Time.deltaTime);
             //Debug.Log("Its Working - Bullet Moving");
         }
@@ -32,17 +36,25 @@ public class Bullet : MonoBehaviour {
     {
         // If it collides with the Duck
         if (collision.gameObject.transform.tag == "Duck")
-            // Call HunterWin function in the Manager Script
-            GameObject.FindGameObjectWithTag("Manager").GetComponent<Manager>().HunterWin();
+            if (!duckHit)
+            {
+                duckHit = true;
+                Manager.instance.HunterWin();
+            }
+            else return;
 
         // If it collides with the Hunter
         if (collision.gameObject.transform.tag == "Hunter")
-            // Call DuckWin function in the Manager Script
-            GameObject.FindGameObjectWithTag("Manager").GetComponent<Manager>().DuckWin();
+            if (!huntHit)
+            {
+                huntHit = true;
+                Manager.instance.DuckWin();
+            }
+            else return;
 
         if (collision.gameObject.transform.tag == "Poop")
             // Call DuckWin function in the Manager Script
-            Debug.Log("Poop Collided");
+            //Debug.Log("Poop Collided");
             SetForwardVec(transform.forward += new Vector3(Random.Range(-5, 5), Random.Range(-0.9f, 0), Random.Range(-5, 5)));
         
     }

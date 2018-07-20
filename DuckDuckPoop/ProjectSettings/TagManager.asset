@@ -10,6 +10,7 @@ TagManager:
   - Hunter
   - Duck
   - Poop
+  - Icon
   layers:
   - Default
   - TransparentFX

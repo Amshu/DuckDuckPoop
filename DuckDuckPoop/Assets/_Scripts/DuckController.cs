@@ -5,7 +5,7 @@ public class DuckController : MonoBehaviour {
 
     // Movement Variables
     [SerializeField] float moveSpeed = 15;
-    [SerializeField] float dashForce = 50;
+    [SerializeField] float dashForce = 500;
     private Vector3 moveDir;
     Rigidbody rb;
 
@@ -51,7 +51,7 @@ public class DuckController : MonoBehaviour {
         Vector3 tempLoc = transform.position;
 
         // Do a dash
-        //rb.AddForce(transform.forward * dashForce * Time.deltaTime, ForceMode.Impulse);
+        rb.AddForce(transform.forward * dashForce * Time.deltaTime, ForceMode.Impulse);
         rb.MovePosition(rb.position + transform.TransformDirection(moveDir) * dashForce * Time.deltaTime);
 
         // Poop
