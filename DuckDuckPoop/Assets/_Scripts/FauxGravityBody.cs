@@ -4,9 +4,17 @@ using UnityEngine;
 
 public class FauxGravityBody : MonoBehaviour {
 
+    [SerializeField] float AttractMultiplier = 1.0f;
+
     [SerializeField] FauxGravityAttractor attractor;
     private Transform myTransform;
 
+   
+    public float GetMultiplier()
+    {
+        return AttractMultiplier;
+    }
+       
     void Start()
     {
         // Get Attractor component from Planet

@@ -10,8 +10,8 @@ public class FauxGravityAttractor : MonoBehaviour {
     {
         Vector3 gravityUp = (body.position - transform.position).normalized;
         Vector3 bodyUp = body.up;
-    
-        body.GetComponent<Rigidbody>().AddForce(gravityUp * gravity);
+        float mult = body.GetComponent<FauxGravityBody>().GetMultiplier();
+        body.GetComponent<Rigidbody>().AddForce(gravityUp * gravity * mult);
 
         Quaternion targetRotation = Quaternion.FromToRotation(bodyUp, gravityUp) * body.rotation;
         body.rotation = Quaternion.Slerp(body.rotation, targetRotation, 50 * Time.deltaTime);
