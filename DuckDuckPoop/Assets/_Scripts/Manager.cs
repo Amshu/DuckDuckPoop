@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
+using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+
 
 // Singleton Class of Manager
 public class Manager : MonoBehaviour {
@@ -9,6 +11,7 @@ public class Manager : MonoBehaviour {
 
     int hunterWin;
     int duckWin;
+    public bool roundEnd;
     public bool gameOver;
 
     //public Text hunterUI;
@@ -61,6 +64,8 @@ public class Manager : MonoBehaviour {
         // Set game over to false
         gameOver = false;
 
+        roundEnd = false;
+
         if(audio == null)
             audio = gameObject.GetComponent<AudioSource>();
         
@@ -90,16 +95,20 @@ public class Manager : MonoBehaviour {
 
     public void RoundEnd()
     {
-        if (duckWin + hunterWin >= 5)
+        roundEnd = true;
+        if (duckWin >= 3)
         {
             gameOver = true;
-            if (duckWin > hunterWin)
-                UIManager.instance.DispDuckWin();
-            else UIManager.instance.DispHunterWin();
+            UIManager.instance.DispDuckWin();
+        }
+        else if (hunterWin >= 3)
+        {
+            gameOver = true;
+            UIManager.instance.DispHunterWin();
         }
         else
         {
-            ResetRound();
+            StartCoroutine(StartCountdown(3.0f));
         }
     }
 
@@ -130,6 +139,8 @@ public class Manager : MonoBehaviour {
 
     public void ResetRound()
     {
+        // Countdown to next round
+        roundEnd = false;
         SceneManager.LoadScene(1);
         InitGame();
     }
@@ -153,4 +164,17 @@ public class Manager : MonoBehaviour {
         Destroy(gameObject);
     }
 
+    private IEnumerator StartCountdown(float countdownValue)
+    {
+        float currCountdownValue = countdownValue;
+        while (currCountdownValue > 0)
+        {
+            Debug.Log("Countdown: " + currCountdownValue);
+            UIManager.instance.DispCountdown((int)currCountdownValue);
+            yield return new WaitForSeconds(1.0f);
+            currCountdownValue--;
+        }
+        UIManager.instance.ClearUI();
+        ResetRound();
+    }
 }

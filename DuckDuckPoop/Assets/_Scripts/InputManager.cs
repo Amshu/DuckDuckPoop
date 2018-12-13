@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class InputManager : MonoBehaviour {
 
     public static InputManager instance = null;              //Static instance of GameManager which allows it to be accessed by any other script.
@@ -19,7 +20,6 @@ public class InputManager : MonoBehaviour {
     HunterController hunter;
     float hx;
     float hz;
-
 
     //Awake is always called before any Start functions
     void Awake()
@@ -60,7 +60,7 @@ public class InputManager : MonoBehaviour {
     void Update()
     {
         CheckControllers();
-        GetMainInput(controllers);
+        if(!Manager.instance.roundEnd) GetMainInput(controllers);
     }
 
     // Function which handles input according to controllers

@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine.UI;
+﻿using UnityEngine.UI;
 using UnityEngine;
 
 public class UIManager : MonoBehaviour {
@@ -65,7 +63,7 @@ public class UIManager : MonoBehaviour {
     {
         contUI.gameObject.SetActive(false);
         countDown.gameObject.SetActive(false);
-
+    
         duckUI.gameObject.SetActive(false);
         hunterUI.gameObject.SetActive(false);
         restart.gameObject.SetActive(false);
@@ -113,5 +111,12 @@ public class UIManager : MonoBehaviour {
     {
         restart.gameObject.SetActive(true);
         mainMenu.gameObject.SetActive(true);
+    }
+
+    public void DispCountdown(int count)
+    {
+        contUI.gameObject.SetActive(true);
+        countDown.gameObject.SetActive(true);
+        countDown.text = count.ToString();
     }
 }

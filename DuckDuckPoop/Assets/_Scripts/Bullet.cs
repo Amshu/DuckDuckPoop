@@ -24,39 +24,39 @@ public class Bullet : MonoBehaviour {
     private void FixedUpdate()
     {
         // If game is not over
-        if (!Manager.instance.gameOver)
-        {
+        //if (!Manager.instance.gameOver && !Manager.instance.roundEnd)
+        //{
             // Rotate around the center of the planet every second
             transform.RotateAround(planet, forward, bullSpeed * Time.deltaTime);
             //Debug.Log("Its Working - Bullet Moving");
-        }
+       // }
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        // If it collides with the Duck
-        if (collision.gameObject.transform.tag == "Duck")
-            if (!duckHit)
-            {
-                duckHit = true;
-                Manager.instance.HunterWin();
-            }
-            else return;
+        if (!Manager.instance.gameOver && !Manager.instance.roundEnd)
+        { 
+            // If it collides with the Duck
+            if (collision.gameObject.transform.tag == "Duck")
+                if (!duckHit)
+                {
+                    duckHit = true;
+                    Manager.instance.HunterWin();
+                }
+                else return;
 
-        // If it collides with the Hunter
-        if (collision.gameObject.transform.tag == "Hunter")
-            if (!huntHit)
-            {
-                huntHit = true;
-                Manager.instance.DuckWin();
-            }
-            else return;
+            // If it collides with the Hunter
+            if (collision.gameObject.transform.tag == "Hunter")
+                if (!huntHit)
+                {
+                    huntHit = true;
+                    Manager.instance.DuckWin();
+                }
+                else return;
 
-        if (collision.gameObject.transform.tag == "Poop")
-            // Call DuckWin function in the Manager Script
-            //Debug.Log("Poop Collided");
-            SetForwardVec(transform.forward += new Vector3(Random.Range(-5, 5), Random.Range(-0.9f, 0), Random.Range(-5, 5)));
-        
+            if (collision.gameObject.transform.tag == "Poop")
+                SetForwardVec(transform.forward += new Vector3(Random.Range(-5, 5), Random.Range(-0.9f, 0), Random.Range(-5, 5)));
+        }
     }
 
     void SetForwardVec(Vector3 v)
