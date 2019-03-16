@@ -61,7 +61,7 @@ public class HunterController : MonoBehaviour {
     }
 
     // Shoot function
-    void HunterShoot()
+    public void HunterShoot()
     {
         //Debug.Log("Fire");
         audio.Play();

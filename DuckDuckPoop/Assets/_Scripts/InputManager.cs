@@ -7,6 +7,9 @@ public class InputManager : MonoBehaviour {
 
     public static InputManager instance = null;              //Static instance of GameManager which allows it to be accessed by any other script.
 
+    [SerializeField] FixedJoystick DuckJS;
+    [SerializeField] FixedJoystick HunterJS;
+
     // Check for controllers
     int controllers;
 
@@ -57,7 +60,7 @@ public class InputManager : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         CheckControllers();
         if(!Manager.instance.roundEnd) GetMainInput(controllers);
@@ -103,13 +106,13 @@ public class InputManager : MonoBehaviour {
     // Function which handles input for keyboard only
     void GetInput0()
     {
-        dx = SimpleInput.GetAxis("Horizontal");
-        dz = SimpleInput.GetAxis("Vertical");
-        duck.MoveDuck(dx, dz, SimpleInput.GetButtonDown("DDuck2"));
+        dx = DuckJS.Horizontal;//Input.GetAxis("Horizontal");
+        dz = DuckJS.Vertical;//Input.GetAxis("Vertical");
+        duck.MoveDuck(dx, dz, Input.GetButtonDown("DDuck2"));
 
-        hx = SimpleInput.GetAxis("Horizontalb");
-        hz = SimpleInput.GetAxis("Verticalb");
-        hunter.MoveHunter(hx, hz, SimpleInput.GetButtonDown("HFire2"));
+        hx = HunterJS.Horizontal;
+        hz = HunterJS.Vertical;
+        hunter.MoveHunter(hx, hz, Input.GetButtonDown("HFire2"));
     }
 
     //// Function which handles input for 1 keyboard and 1 controller

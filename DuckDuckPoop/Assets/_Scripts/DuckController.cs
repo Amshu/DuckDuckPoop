@@ -45,7 +45,7 @@ public class DuckController : MonoBehaviour {
             DuckPoop();
     }
 
-    void DuckPoop()
+    public void DuckPoop()
     {
         // Store the current position
         Vector3 tempLoc = transform.position;
