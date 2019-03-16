@@ -624,10 +624,10 @@ PlayerSettings:
   facebookXfbml: 0
   facebookFrictionlessRequests: 1
   apiCompatibilityLevel: 2
-  cloudProjectId: 
+  cloudProjectId: 157b0391-98f9-4d41-8c82-0a1bd70388a6
   framebufferDepthMemorylessMode: 0
-  projectName: Template_3D
-  organizationId: 
+  projectName: DuckDuckPoop
+  organizationId: luisvsm
   cloudEnabled: 0
   enableNativePlatformBackendsForNewInputSystem: 0
   disableOldInputManagerSupport: 0
