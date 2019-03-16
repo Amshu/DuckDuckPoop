@@ -114,6 +114,7 @@ public class Manager : MonoBehaviour {
 
     private void Update()
     {
+        /*
         if (Input.GetKeyDown(KeyCode.P))
             Rematch();
 
@@ -132,9 +133,8 @@ public class Manager : MonoBehaviour {
                 volDisabled = true;
                 audio.Stop();
             }
-        }
-            
-        
+       }
+       */ 
     }
 
     public void ResetRound()
@@ -176,5 +176,19 @@ public class Manager : MonoBehaviour {
         }
         UIManager.instance.ClearUI();
         ResetRound();
+    }
+
+    public void ToggleMusic()
+    {
+        if (volDisabled)
+        {
+            volDisabled = false;
+            audio.Play();
+        }
+        else
+        {
+            volDisabled = true;
+            audio.Stop();
+        }
     }
 }
