@@ -6,6 +6,11 @@ TagManager:
   tags:
   - Planet
   - Bullet
+  - Manager
+  - Hunter
+  - Duck
+  - Poop
+  - Icon
   layers:
   - Default
   - TransparentFX
@@ -16,9 +21,9 @@ TagManager:
   - 
   - 
   - PostProcessing
-  - 
-  - 
-  - 
+  - Character
+  - Projectile
+  - Poop
   - 
   - 
   - 
