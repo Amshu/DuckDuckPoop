@@ -72,10 +72,10 @@ public class InputManager : MonoBehaviour {
                 GetInput0();
                 break;
             case 1:
-                GetInput1();
+                //GetInput1();
                 break;
             case 2:
-                GetInput2();
+                //GetInput2();
                 break;
             default:
                 Debug.Log("Error with duck input");
@@ -103,37 +103,37 @@ public class InputManager : MonoBehaviour {
     // Function which handles input for keyboard only
     void GetInput0()
     {
-        dx = Input.GetAxis("Horizontal");
-        dz = Input.GetAxis("Vertical");
-        duck.MoveDuck(dx, dz, Input.GetButtonDown("DDuck2"));
+        dx = SimpleInput.GetAxis("Horizontal");
+        dz = SimpleInput.GetAxis("Vertical");
+        duck.MoveDuck(dx, dz, SimpleInput.GetButtonDown("DDuck2"));
 
-        hx = Input.GetAxis("Horizontalb");
-        hz = Input.GetAxis("Verticalb");
-        hunter.MoveHunter(hx, hz, Input.GetButtonDown("HFire2"));
+        hx = SimpleInput.GetAxis("Horizontalb");
+        hz = SimpleInput.GetAxis("Verticalb");
+        hunter.MoveHunter(hx, hz, SimpleInput.GetButtonDown("HFire2"));
     }
 
-    // Function which handles input for 1 keyboard and 1 controller
-    void GetInput1()
-    {
-        dx = Input.GetAxis("Horizontal");
-        dz = Input.GetAxis("Vertical");
-        duck.MoveDuck(dx, dz, Input.GetButtonDown("DDuck2"));
+    //// Function which handles input for 1 keyboard and 1 controller
+    //void GetInput1()
+    //{
+    //    dx = Input.GetAxis("Horizontal");
+    //    dz = Input.GetAxis("Vertical");
+    //    duck.MoveDuck(dx, dz, Input.GetButtonDown("DDuck2"));
 
-        hx = Input.GetAxis("Horizontal2");
-        hz = Input.GetAxis("Vertical2");
-        hunter.MoveHunter(hx, hz, Input.GetButtonDown("HFire2"));
-    }
+    //    hx = Input.GetAxis("Horizontal2");
+    //    hz = Input.GetAxis("Vertical2");
+    //    hunter.MoveHunter(hx, hz, Input.GetButtonDown("HFire2"));
+    //}
 
-    // Function which handles ipnut for 2 controllers
-    void GetInput2()
-    {
-        dx = Input.GetAxis("Horizontal1");
-        dz = Input.GetAxis("Vertical1");
-        duck.MoveDuck(dx, dz, Input.GetButtonDown("DDuck2"));
+    //// Function which handles ipnut for 2 controllers
+    //void GetInput2()
+    //{
+    //    dx = Input.GetAxis("Horizontal1");
+    //    dz = Input.GetAxis("Vertical1");
+    //    duck.MoveDuck(dx, dz, Input.GetButtonDown("DDuck2"));
 
-        hx = Input.GetAxis("Horizontal2");
-        hz = Input.GetAxis("Vertical2");
-        hunter.MoveHunter(hx, hz, Input.GetButtonDown("HFire2"));
-    }
+    //    hx = Input.GetAxis("Horizontal2");
+    //    hz = Input.GetAxis("Vertical2");
+    //    hunter.MoveHunter(hx, hz, Input.GetButtonDown("HFire2"));
+    //}
 
 }
