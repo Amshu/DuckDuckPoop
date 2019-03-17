@@ -108,11 +108,11 @@ public class InputManager : MonoBehaviour {
     {
         dx = DuckJS.Horizontal;//Input.GetAxis("Horizontal");
         dz = DuckJS.Vertical;//Input.GetAxis("Vertical");
-        duck.MoveDuck(dx, dz, false);
+        duck.MoveDuck(-dz, dx, false);
 
         hx = HunterJS.Horizontal;
         hz = HunterJS.Vertical;
-        hunter.MoveHunter(hx, hz, false);
+        hunter.MoveHunter(hz, hx, false);
     }
 
 
