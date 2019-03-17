@@ -112,7 +112,7 @@ public class InputManager : MonoBehaviour {
 
         hx = HunterJS.Horizontal;
         hz = HunterJS.Vertical;
-        hunter.MoveHunter(hz, hx, false);
+        hunter.MoveHunter(-hz, hx, false);
     }
 
 
