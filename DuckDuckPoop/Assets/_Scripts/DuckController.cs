@@ -45,19 +45,22 @@ public class DuckController : MonoBehaviour {
             DuckPoop();
     }
 
-    void DuckPoop()
+    public void DuckPoop()
     {
-        // Store the current position
-        Vector3 tempLoc = transform.position;
+        if (canPoop)
+        {
+            // Store the current position
+            Vector3 tempLoc = transform.position;
 
-        // Do a dash
-        rb.AddForce(transform.forward * dashForce * Time.deltaTime, ForceMode.Impulse);
-        rb.MovePosition(rb.position + transform.TransformDirection(moveDir) * dashForce * Time.deltaTime);
+            // Do a dash
+            rb.AddForce(transform.forward * dashForce * Time.deltaTime, ForceMode.Impulse);
+            rb.MovePosition(rb.position + transform.TransformDirection(moveDir) * dashForce * Time.deltaTime);
 
-        // Poop
-        GameObject.Instantiate(poop, tempLoc, transform.rotation);
+            // Poop
+            GameObject.Instantiate(poop, tempLoc, transform.rotation);
 
-        StartCoroutine("Reload");
+            StartCoroutine("Reload");
+        }
     }
 
     // Cooldown function for ability
@@ -74,7 +77,7 @@ public class DuckController : MonoBehaviour {
         ind.GetComponent<MeshRenderer>().material.color = Color.green;
     }
 
-    // Cooldown for ducking
+    // Cooldown function for ducking
     IEnumerator OnDuck()
     {
         // Change the scale of the mesh

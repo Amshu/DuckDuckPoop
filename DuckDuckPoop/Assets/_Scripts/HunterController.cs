@@ -61,16 +61,19 @@ public class HunterController : MonoBehaviour {
     }
 
     // Shoot function
-    void HunterShoot()
+    public void HunterShoot()
     {
-        //Debug.Log("Fire");
-        audio.Play();
-        GameObject.Instantiate(bullet, spawnLoc.transform.position, spawnLoc.transform.rotation);
+        if (canShoot)
+        {
+            //Debug.Log("Fire");
+            audio.Play();
+            GameObject.Instantiate(bullet, spawnLoc.transform.position, spawnLoc.transform.rotation);
 
-        // Start cooldown
-        canShoot = false;
-        ind.GetComponent<MeshRenderer>().material.color = Color.red;
-        StartCoroutine("Reload");
+            // Start cooldown
+            canShoot = false;
+            ind.GetComponent<MeshRenderer>().material.color = Color.red;
+            StartCoroutine("Reload");
+        }
     }
 
     IEnumerator Reload()
